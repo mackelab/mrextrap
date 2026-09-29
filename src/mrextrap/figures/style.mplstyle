@@ -1,0 +1,55 @@
+# MRExtrap figure style: mackelab matplotlibrc (S:matplotlibrc) with the thesis-width overrides
+# (Arial 7 pt, thinner axes). Arial falls back to DejaVu Sans when not installed.
+# Units are pt.
+text.usetex          : False
+mathtext.default     : regular
+mathtext.fontset     : custom
+mathtext.rm          : sans
+mathtext.it          : sans:italic
+mathtext.bf          : sans:bold
+
+font.family          : sans-serif
+font.sans-serif      : Arial, DejaVu Sans
+font.size            : 7
+figure.titlesize     : 7
+figure.labelsize     : 7
+legend.fontsize      : 7
+axes.titlesize       : 7
+axes.labelsize       : 7
+xtick.labelsize      : 7
+ytick.labelsize      : 7
+axes.titlepad        : 3
+
+image.interpolation   : nearest
+image.resample        : False
+image.composite_image : True
+
+axes.spines.left     : True
+axes.spines.bottom   : True
+axes.spines.top      : False
+axes.spines.right    : False
+
+axes.linewidth       : 0.8
+xtick.major.width    : 0.8
+xtick.minor.width    : 0.8
+ytick.major.width    : 0.8
+ytick.minor.width    : 0.8
+xtick.major.size     : 2.5
+xtick.minor.size     : 1.5
+ytick.major.size     : 2.5
+ytick.minor.size     : 1.5
+xtick.major.pad      : 2.5
+ytick.major.pad      : 2.5
+xtick.direction      : out
+ytick.direction      : out
+
+lines.linewidth      : 1.0
+lines.markersize     : 2.5
+
+legend.frameon       : False
+legend.handlelength  : 1.6
+legend.columnspacing : 1.0
+
+pdf.fonttype         : 42
+savefig.dpi          : 300
+savefig.pad_inches   : 0.0

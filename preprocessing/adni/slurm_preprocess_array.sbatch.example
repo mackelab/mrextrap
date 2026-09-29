@@ -1,0 +1,17 @@
+#!/bin/bash
+# Example only: adapt partition/account/paths. Stage 1+2 (convert, bids) are cheap; run them once
+# on a login/interactive node, then fan the FSL stage out as an array (each task takes every N-th scan).
+#   python preprocessing/adni/preprocess_adni.py all --input $ADNI_ROOT --input-type dicom \
+#       --adnimerge $ADNIMERGE --workdir $WORK   # (or run 'convert' and 'bids' separately)
+#SBATCH --job-name=adni_prep
+#SBATCH --array=0-49
+#SBATCH --cpus-per-task=1
+#SBATCH --mem=4G
+#SBATCH --time=04:00:00
+#SBATCH --output=slurm_logs/adni_prep_%A_%a.out
+
+set -euo pipefail
+source "${FSLDIR:?set FSLDIR}/etc/fslconf/fsl.sh"   # FSL on PATH, FSLOUTPUTTYPE=NIFTI_GZ
+python preprocessing/adni/preprocess_adni.py preprocess \
+    --bids-dir "${WORK:?}/bids" --out-dir "${WORK}/preprocessed" \
+    --shard slurm -j 1

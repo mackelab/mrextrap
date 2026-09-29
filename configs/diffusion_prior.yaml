@@ -1,0 +1,33 @@
+# Paper diffusion prior. Values equal the legacy config
+# train_beta_diffusion_smaller64highlr3e-4longtrainlinear.yaml, except dataset paths point into
+# run_dir (see paths.yaml). NOTE(paper): the legacy config pointed val/test at the non-L1
+# latent_betas.pt files, but training never reads val/test (no validation loop; checkpoints are
+# saved every 20 epochs), so they point at the L1 files that `mrextrap fit-betas` writes.
+training:
+  lr: 0.0003
+  seed: 42
+  num_epochs: 2000
+  batch_size: 256
+  gradient_accumulation_steps: 1
+  num_warmup_steps: 3000
+  mixed_precision: bf16
+  torch_compile: true
+  num_workers: 4
+  lr_scheduler: cosine
+  noise_schedule: linear
+  ema_decay: 0.99
+  NT: 500
+  grad_clip_val: 1.0
+dataset:
+  latents_path_train: ${paths.latents_dir}/train_latent_betas_l1.pt
+  latents_path_val: ${paths.latents_dir}/val_latent_betas_l1.pt
+  latents_path_test: ${paths.latents_dir}/test_latent_betas_l1.pt
+model:
+  image_size: [4, 20, 24, 20]
+  in_channels: 4
+  model_channels: 64
+  out_channels: 4
+  num_res_blocks: 2
+  attention_resolutions: []
+  channel_mult: [1, 2]
+exp_name: train_beta_diffusion_smaller64highlr3e-4longtrainlinear

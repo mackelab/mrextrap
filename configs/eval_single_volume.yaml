@@ -1,0 +1,12 @@
+# Single-volume evaluation (Table 1).
+eval:
+  methods: [global, unet, diffusion]
+  daninet_pairs: ${paths.run_dir}/daninet_pairs.csv   # user-supplied: sid, baseline_age, target_age
+  unet_checkpoint: epoch_2000            # NOTE(paper): holds weights after 1990 epochs (Q4)
+  diffusion_checkpoint: epoch_2000       # NOTE(paper): same (Q4)
+  num_samples: 5                         # K diffusion samples
+  seed: 0                                # NOTE(paper): same generator seed for every subject (Q14)
+  delta_t_from_first_scan: true          # NOTE(paper): Q1, dt = age since the subject's first scan
+  ncond: 1
+  device: cuda
+  results_dir: ${paths.run_dir}/eval/single_volume

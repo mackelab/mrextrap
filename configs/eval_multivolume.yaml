@@ -1,0 +1,9 @@
+# Multi-volume evaluation with the Global prior (Fig. 3).
+eval:
+  conditioning_years: [1, 2, 3]
+  min_future_years: 2
+  min_baseline_years: 3
+  baseline_formats: [earliest, latest]   # NOTE(paper): panel b uses earliest, panels a/c latest (Q8)
+  obs_var_scale: 1.0                     # results_var1.00.json
+  device: cuda
+  results_dir: ${paths.run_dir}/eval/multivolume

@@ -1,0 +1,27 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite the preprint below."
+title: "MRExtrap: Longitudinal Aging of Brain MRIs using Linear Modeling in Latent Space"
+type: software
+license: MIT
+repository-code: "https://github.com/mackelab/mrextrap"
+authors:
+  - family-names: Kapoor
+    given-names: Jaivardhan
+  - family-names: Macke
+    given-names: Jakob H.
+  - family-names: Baumgartner
+    given-names: Christian F.
+preferred-citation:
+  type: article
+  title: "MRExtrap: Longitudinal Aging of Brain MRIs using Linear Modeling in Latent Space"
+  authors:
+    - family-names: Kapoor
+      given-names: Jaivardhan
+    - family-names: Macke
+      given-names: Jakob H.
+    - family-names: Baumgartner
+      given-names: Christian F.
+  journal: "arXiv preprint"
+  notes: "arXiv:2508.19482"
+  year: 2025
+  url: "https://arxiv.org/abs/2508.19482"

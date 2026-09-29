@@ -1,0 +1,10 @@
+# Single place for all run-directory paths. Override on the command line, e.g.
+#   mrextrap train-ae --config configs/autoencoder.yaml paths.run_dir=/data/mrextrap_run
+paths:
+  run_dir: ./run_dir                       # everything is read from / written to here
+  splits_dir: ${paths.run_dir}/splits      # {train,val,test}.csv, user-generated (see docs/data.md)
+  latents_dir: ${paths.run_dir}/latents
+  priors_dir: ${paths.run_dir}/priors
+  volumes_dir: ${paths.run_dir}/volumes
+  weights_dir: ${paths.run_dir}/weights    # optional location of synthseg_torch.pt, see docs/weights.md
+  synthseg_weights: ${paths.weights_dir}/synthseg_torch.pt   # or set MREXTRAP_SYNTHSEG_WEIGHTS

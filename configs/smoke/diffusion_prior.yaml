@@ -1,0 +1,29 @@
+training:
+  lr: 0.0003
+  seed: 0
+  num_epochs: 2
+  batch_size: 4
+  gradient_accumulation_steps: 1
+  num_warmup_steps: 2
+  mixed_precision: "no"
+  torch_compile: false
+  num_workers: 0
+  cpu: true
+  lr_scheduler: cosine
+  noise_schedule: linear
+  ema_decay: 0.99
+  NT: 20
+  grad_clip_val: 1.0
+dataset:
+  latents_path_train: ${paths.latents_dir}/train_latent_betas_l1.pt
+  latents_path_val: ${paths.latents_dir}/val_latent_betas_l1.pt
+  latents_path_test: ${paths.latents_dir}/test_latent_betas_l1.pt
+model:
+  image_size: [4, 4, 4, 4]
+  in_channels: 4
+  model_channels: 32  # GroupNorm(32 groups) needs a multiple of 32
+  out_channels: 4
+  num_res_blocks: 1
+  attention_resolutions: []
+  channel_mult: [1]
+exp_name: smoke_diffusion_prior

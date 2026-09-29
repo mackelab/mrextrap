@@ -1,0 +1,20 @@
+# Evaluation stages of the synthetic smoke run (single-volume, multi-volume); FakeSegmenter, CPU.
+eval:
+  methods: [global, unet, diffusion]
+  split: test
+  daninet_pairs: ${paths.run_dir}/daninet_pairs.csv   # written by `mrextrap smoke`
+  unet_checkpoint: epoch_20           # legacy label of the last of 2 epochs
+  diffusion_checkpoint: epoch_20
+  num_samples: 2
+  seed: 0
+  delta_t_from_first_scan: true
+  ncond: 1
+  device: cpu
+  conditioning_years: [1, 2, 3]
+  min_future_years: 2
+  min_baseline_years: 3
+  baseline_formats: [earliest, latest]
+  obs_var_scale: 1.0
+  results_dir: ${paths.run_dir}/eval/single_volume
+segmentation:
+  backend: fake

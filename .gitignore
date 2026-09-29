@@ -1,0 +1,70 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.eggs/
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.ipynb_checkpoints/
+
+# Data: never commit subject-level tables or images
+/data/
+*.csv
+*.tsv
+*.nii
+*.nii.gz
+*.mgz
+*.npz
+*.pkl
+*.parquet
+*.ipynb
+*.npy
+# Exception: static label tables shipped with the package
+!src/mrextrap/segmentation/labels/*.npy
+
+# Weights and checkpoints
+*.pt
+*.pth
+*.bin
+*.ckpt
+*.safetensors
+checkpoints/
+exp/
+exp_eval/
+run_dir/
+runs/
+weights/
+
+# Logs and experiment trackers
+wandb/
+slurm_logs/
+logs/
+*.log
+lightning_logs/
+
+# Rendered outputs
+*.pdf
+*.png
+*.mp4
+*.gif
+*.zip
+# Exceptions (add explicitly if a static figure asset is ever needed)
+
+# Personal / agent files
+CLAUDE.md
+AGENTS.md
+plan.md
+refactoring_plan.md
+code2prompt.txt
+mrextrap_paper.tex
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/

@@ -1,0 +1,50 @@
+training:
+  lr: 0.0001
+  seed: 0
+  num_epochs: 1
+  batch_size: 2
+  gradient_accumulation_steps: 1
+  mixed_precision: "no"
+  torch_compile: false
+  num_workers: 0
+  disc_beta: 0.005
+  lpips_beta: 0.0
+  kl_beta: 0.00001
+  lr_scheduler: cosine
+  grad_clip_val: 0.5
+  finetune: false
+  warmup_epochs: 1
+  use_wandb: false
+  cpu: true
+  num_warmup_steps: 2
+  max_steps_per_epoch: 2   # two optimisation steps in total
+dataset:
+  train_csv: ${paths.splits_dir}/train.csv
+  val_csv: ${paths.splits_dir}/val.csv
+  test_csv: ${paths.splits_dir}/test.csv
+  cropping_offset: [0, 0, 0]
+  crop_size: [32, 32, 32]
+model:
+  n_channels: 16  # GroupNorm(16 groups) needs >= 16 channels
+  z_channels: 4
+  ch_mult: [1, 2, 2, 4]
+  num_res_blocks: 1
+  resolution: [32, 32, 32]
+exp_name: smoke_autoencoder
+output_dir: ${paths.run_dir}/autoencoder
+encoding:
+  splits: [train, val, test]
+  checkpoint: null
+  device: cpu
+segmentation:
+  backend: fake
+ae_eval:
+  split: test
+  device: cpu
+progression:
+  device: cpu
+interp:
+  split: test
+  mode: latent
+  n_alpha: 4
+  device: cpu

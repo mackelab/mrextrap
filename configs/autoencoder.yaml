@@ -1,0 +1,64 @@
+# Paper autoencoder: `train_autoencoder_older8`, checkpoint epoch_124 (author decision 2026-09-29).
+# Used for all main experiments (latents, priors, evaluation).
+#
+# RECONSTRUCTED CONFIG. The original configs/train_autoencoder_older8.yaml (written by the training
+# script at start-up) is not in the code snapshot. Values below are the hard-coded defaults of
+# train_autoencoder.py (exp_name train_autoencoder_older, which is the directory name every
+# downstream config uses: exp_eval/autoencoder_older/...). The launch script only overrides
+# dataset.base_t1_path, so older8 differs from the script defaults at most through `--update_conf`
+# overrides of an earlier sweep run. Values whose paper-run setting was not recorded are marked below.
+#
+# Provenance notes:
+# - Checkpoints were saved every epoch under epoch_{epoch//2*2+2}; `epoch_124` is the state after
+#   124 finished epochs (see legacy_ae_epoch_label). With num_epochs 125 the run would have ended at
+#   epoch_126, so it was either stopped after epoch index 123 (1.5-day SLURM limit in
+#   autoencoder_train.sh) or num_epochs was 124.
+# - The snapshot's configs/train_autoencoder{,_acc,_acc_ft}.yaml (70 epochs, batch 2, grad-accum 2)
+#   and create_latent_betas.py (acc_ft3: lr 5e-5, finetune from older8/epoch_124) are other runs.
+#   In the snapshot acc_ft3 is initialised FROM older8, i.e. older8 is the parent of the finetune
+#   runs, not their child (the chain in the task description is the reverse order).
+training:
+  lr: 0.0001
+  seed: 42
+  # Research-code default; the exact value of the paper run (125 or 124) was not recorded. It also sets
+  # disc_epoch_start = int(0.2 * num_epochs) (25 vs 24) and the LR schedule horizon (x1.3).
+  num_epochs: 125
+  # Research-code default; the exact per-GPU batch size of the paper run was not recorded. Script default 1 (comment: "2 for each a100, technically 4
+  # for VM"); the acc runs used 2. Launch script requests 8 A100s, so the effective batch was
+  # 8 x batch_size (gradients are averaged over processes; gradient_accumulation_steps is a no-op).
+  batch_size: 1
+  # Research-code default; the number of GPUs of the paper run was not recorded (8 in autoencoder_train.sh). accelerate steps the LR schedulers
+  # once per process, so 8 GPUs advance the warm-up/cosine schedule 8x faster per optimiser step.
+  gradient_accumulation_steps: 1   # NOTE(paper): not used by the training loop (no-op)
+  mixed_precision: bf16
+  torch_compile: true              # accelerate dynamo backend INDUCTOR
+  num_workers: 4
+  disc_beta: 0.005                 # adversarial loss weight
+  lpips_beta: 1.0                  # perceptual loss weight
+  kl_beta: 0.00001                 # KL weight after ramp
+  lr_scheduler: cosine
+  num_warmup_steps: 10000          # hard-coded in the original script
+  grad_clip_val: 0.5
+  # disc_epoch_start: (unset) = int(0.2 * num_epochs), original script default
+  # finetune stuff (from scratch for older8)
+  finetune: false
+  # Research-code default; the exact value of the paper run was not recorded. Script default 1 (its comment says "1 if finetune, else 5"). With 1 the KL and
+  # adversarial ramps last one epoch of steps.
+  warmup_epochs: 1
+  use_wandb: false
+dataset:
+  train_csv: ${paths.splits_dir}/train.csv
+  val_csv: ${paths.splits_dir}/val.csv
+  test_csv: ${paths.splits_dir}/test.csv
+model:
+  n_channels: 32
+  z_channels: 4
+  ch_mult: [1, 2, 2, 4]
+  num_res_blocks: 2
+  resolution: [160, 192, 160]
+exp_name: train_autoencoder_older8
+output_dir: ${paths.run_dir}/autoencoder
+encoding:                          # used by `mrextrap encode`
+  splits: [train, val, test]
+  checkpoint: null                 # default: <output_dir>
+  device: null                     # default: cuda if available
