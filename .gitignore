@@ -57,7 +57,6 @@ lightning_logs/
 # Exceptions (add explicitly if a static figure asset is ever needed)
 
 # Personal / agent files
-CLAUDE.md
 AGENTS.md
 plan.md
 refactoring_plan.md
